@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Members</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .faculty-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .faculty-btn {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .faculty-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: white;
+        }
+
+        .faculty-details {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            margin-top: 30px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faculty-details.active {
+            display: block;
+        }
+
+        .faculty-card {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .faculty-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .faculty-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #667eea;
+            min-width: 80px;
+            margin-right: 15px;
+        }
+
+        .info-value {
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .info-value a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        .close-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #ff3742;
+        }
+
+        @media (max-width: 768px) {
+            .faculty-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .faculty-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Faculty Members</h1>
+        
+        <div class="faculty-buttons">
+            <button class="faculty-btn" onclick="showFaculty('dr-smith')">
+                👨‍🏫 Dr. John Smith
+            </button>
+            <button class="faculty-btn" onclick="showFaculty('prof-johnson')">
+                👩‍🏫 Prof. Sarah Johnson
+            </button>
+            <button class="faculty-btn" onclick="showFaculty('dr-patel')">
+                👨‍🏫 Dr. Raj Patel
+            </button>
+            <button class="faculty-btn" onclick="showFaculty('prof-davis')">
+                👩‍🏫 Prof. Emily Davis
+            </button>
+            <button class="faculty-btn" onclick="showFaculty('dr-wilson')">
+                👨‍🏫 Dr. Michael Wilson
+            </button>
+        </div>
+
+        <!-- Faculty Details -->
+        <div id="faculty-details" class="faculty-details">
+            <div class="faculty-card" id="faculty-card-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <button class="close-btn" onclick="closeFaculty()">❌ Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showFaculty(id) {
+            const details = document.getElementById('faculty-details');
+            const cardContent = document.getElementById('faculty-card-content');
+            
+            const facultyData = {
+                'dr-smith': {
+                    name: 'Dr. John Smith',
+                    age: '45',
+                    email: 'john.smith@university.edu',
+                    phone: '+91 98765 43210',
+                    subject: 'Computer Science',
+                    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face'
+                },
+                'prof-johnson': {
+                    name: 'Prof. Sarah Johnson',
+                    age: '38',
+                    email: 'sarah.johnson@university.edu',
+                    phone: '+91 98765 43211',
+                    subject: 'Mathematics',
+                    photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=250&h=250&fit=crop&crop=face&mask=ellipse'
+                },
+                'dr-patel': {
+                    name: 'Dr. Raj Patel',
+                    age: '42',
+                    email: 'raj.patel@university.edu',
+                    phone: '+91 98765 43212',
+                    subject: 'Physics',
+                    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face'
+                },
+                'prof-davis': {
+                    name: 'Prof. Emily Davis',
+                    age: '40',
+                    email: 'emily.davis@university.edu',
+                    phone: '+91 98765 43213',
+                    subject: 'English Literature',
+                    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face'
+                },
+                'dr-wilson': {
+                    name: 'Dr. Michael Wilson',
+                    age: '47',
+                    email: 'michael.wilson@university.edu',
+                    phone: '+91 98765 43214',
+                    subject: 'Chemistry',
+                    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face'
+                }
+            };
+
+            const faculty = facultyData[id];
+            cardContent.innerHTML = `
+                <img src="${faculty.photo}" alt="${faculty.name}" class="faculty-photo" 
+                     onerror="this.src='https://via.placeholder.com/150x150/667eea/ffffff?text=${faculty.name.split(' ')[1][0]}'">
+                <div class="faculty-info">
+                    <h3>${faculty.name}</h3>
+                    <div class="info-row">
+                        <span class="info-label">👴 Age:</span>
+                        <span class="info-value">${faculty.age} years</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">📧 Email:</span>
+                        <span class="info-value"><a href="mailto:${faculty.email}">${faculty.email}</a></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">📱 Phone:</span>
+                        <span class="info-value"><a href="tel:${faculty.phone}">${faculty.phone}</a></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">📚 Subject:</span>
+                        <span class="info-value">${faculty.subject}</span>
+                    </div>
+                </div>
+            `;
+            
+            details.classList.add('active');
+            details.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeFaculty() {
+            document.getElementById('faculty-details').classList.remove('active');
+        }
+
+        // Close when clicking outside the faculty details
+        document.getElementById('faculty-details').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFaculty();
+            }
+        });
+    </script>
+</body>
+</html>
